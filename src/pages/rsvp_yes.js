@@ -1,16 +1,10 @@
 import React from "react";
-import Link from "gatsby-link";
-import Helmet from "react-helmet";
 import { navigateTo } from "gatsby-link";
 
 function encode(data) {
-  const formData = new FormData();
-
-  for (const key of Object.keys(data)) {
-    formData.append(key, data[key]);
-  }
-
-  return formData;
+  return Object.keys(data)
+    .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+    .join("&");
 }
 
 export default class Contact extends React.Component {
@@ -23,15 +17,12 @@ export default class Contact extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  handleAttachment = e => {
-    this.setState({ [e.target.name]: e.target.files[0] });
-  };
-
   handleSubmit = e => {
     e.preventDefault();
     const form = e.target;
     fetch("/", {
       method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: encode({
         "form-name": form.getAttribute("name"),
         ...this.state
@@ -44,9 +35,8 @@ export default class Contact extends React.Component {
   render() {
     return (
       <div>
-        <h1>File Upload</h1>
         <form
-          name="file-upload"
+          name="rsvp_yes"
           method="post"
           action="/thanks/"
           data-netlify="true"
@@ -54,27 +44,44 @@ export default class Contact extends React.Component {
           onSubmit={this.handleSubmit}
         >
           {/* The `form-name` hidden field is required to support form submissions without JavaScript */}
-          <input type="hidden" name="form-name" value="file-upload" />
+          <input type="hidden" name="form-name" value="contact" />
           <p hidden>
             <label>
               Don’t fill this out:{" "}
               <input name="bot-field" onChange={this.handleChange} />
             </label>
           </p>
+
           <p>
             <label>
-              Your name:<br />
-              <input type="text" name="name" onChange={this.handleChange} />
+              First and Last Name:<br />
+              <input type="text" name="guest_name" onChange={this.handleChange} required/>
             </label>
           </p>
           <p>
             <label>
-              File:<br />
-              <input
-                type="file"
-                name="attachment"
-                onChange={this.handleAttachment}
-              />
+              Your email:<br />
+              <input type="email" placeholder="email@email.com" name="email" onChange={this.handleChange} required/>
+            </label>
+          </p>
+          <p>
+            <label>
+              Number of Seats to Reserve<br />
+              <input type="number" name="seat_count" placeholder="#" onChange={this.handleChange} required/>
+            </label>
+          </p>
+
+          <p>
+            <label>
+              Guests Full Name<br />
+              <input type="text" name="plus_ones" onChange={this.handleChange} />
+            </label>
+          </p>
+
+          <p>
+            <label>
+              Mailing Address:<br />
+              <textarea type="text" name="address" placeholder="111 Abc Street, City, X1X 1X1" onChange={this.handleChange} />
             </label>
           </p>
           <p>
