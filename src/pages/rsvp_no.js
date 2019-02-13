@@ -37,7 +37,7 @@ export default class Contact extends React.Component {
       <div>
         <h1>Contact</h1>
         <form
-          name="contact"
+          name="rsvp_no"
           method="post"
           action="/thanks/"
           data-netlify="true"
@@ -54,7 +54,7 @@ export default class Contact extends React.Component {
           </p>
           <p>
             <label>
-              Your name:<br />
+              First and Last Name:<br />
               <input type="text" name="name" onChange={this.handleChange} />
             </label>
           </p>
@@ -62,12 +62,6 @@ export default class Contact extends React.Component {
             <label>
               Your email:<br />
               <input type="email" name="email" onChange={this.handleChange} />
-            </label>
-          </p>
-          <p>
-            <label>
-              Message:<br />
-              <textarea name="message" onChange={this.handleChange} />
             </label>
           </p>
           <p>
