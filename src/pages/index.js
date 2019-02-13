@@ -13,6 +13,7 @@ export default class Index extends React.Component {
         <ul>
           <li><Link to="/rsvp_no/">No</Link></li>
           <li><Link to="/rsvp_yes/">Yes</Link></li>
+          <li><Link to="/recaptcha/">Yes</Link></li>
         </ul>
       </div>
     );

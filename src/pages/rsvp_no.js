@@ -35,7 +35,7 @@ export default class Contact extends React.Component {
   render() {
     return (
       <div>
-        <h1>Contact</h1>
+        <h1>RSVP</h1>
         <form
           name="rsvp_no"
           method="post"
